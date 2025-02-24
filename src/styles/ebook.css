@@ -641,5 +641,49 @@ body.dark-mode {
     pointer-events: none;
   }
   
+.popupStyle  {
+    position: absolute;
+    max-width: 80%;
+    bottom: 80px;
+    margin: 0 auto;
+    background-color: var(--branco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    text-align: center;
+}
 
+.popupStyle .titulo {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--rosa);
+}
 
+.popupStyle .descricao {
+    font-size: 1rem;
+    line-height: 1.6rem;
+}
+
+.pop-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
+.pop-buttons button {
+    width: 50%;
+    height: 40px;
+    background-color: var(--rosa);
+    border-radius: 6px;
+    color: var(--preto);
+    font-family: var(--font-text);
+    font-size: 1.1rem;
+}
+
+.pop-buttons button:first-child {
+    background-color: #e4e4e4;
+}

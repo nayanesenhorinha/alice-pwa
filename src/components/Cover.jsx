@@ -6,6 +6,18 @@ const Cover = ({ onNext }) => {
 
   return (
     <div className="cover">
+
+        <div className="popupStyle">
+          <p className='titulo'>Quer instalar nosso app?</p>
+          <p className='descricao'>Instalando o app você pode fazer a leitura offline direto e facilidade de acesso ao ebook</p>
+          <div className="pop-buttons">
+            
+          <button >Não</button>
+          <button>Sim</button>
+          </div>
+          
+        </div>
+
       <img 
         className="cover-image" 
         src="https://raw.githubusercontent.com/nayanepreta/alice-in-wonderland/refs/heads/main/src/assets/capa.png" 
@@ -23,6 +35,9 @@ const Cover = ({ onNext }) => {
           />
         </button>
       </div>
+
+
+
     </div>
   );
 };

@@ -7,10 +7,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      //includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Meu PWA',
-        short_name: 'PWA',
+        name: 'Alice',
+        short_name: 'Alice',
         description: 'Meu Progressive Web App com React e Vite',
         theme_color: '#ffffff',
         background_color: '#ffffff',
@@ -31,7 +31,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true, // Ativa o PWA no ambiente de desenvolvimento
+        enabled: true, 
         type: 'module',
         navigateFallback: 'index.html',
       },
@@ -39,6 +39,6 @@ export default defineConfig({
   ],
   server: {
     host: 'localhost',
-    port: 5173, // Defina a porta correta do seu projeto
+    port: 5173, 
   },
 });

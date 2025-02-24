@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Book from "./pages/Book";
 import MetaTags from "./components/MetaTags";
+import './styles/ebook.css';
 
 function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -10,7 +11,7 @@ function App() {
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      setShowPopup(true); // Mostra o pop-up quando o prompt estiver disponível
+      setShowPopup(true); 
     };
 
     window.addEventListener("beforeinstallprompt", handler);
@@ -41,27 +42,21 @@ function App() {
       <Book />
 
       {showPopup && (
-        <div style={popupStyle}>
-          <p>Quer instalar nosso app?</p>
+        <div className="popupStyle">
+          <p className='titulo'>Quer instalar nosso app?</p>
+          <p className='descricao'>Instalando o app você pode fazer a leitura offline direto e facilidade de acesso ao ebook</p>
+
+        <div className="pop-buttons">
           <button onClick={installPWA}>Instalar</button>
           <button onClick={() => setShowPopup(false)}>Fechar</button>
         </div>
+        </div>
       )}
+
+
     </div>
   );
 }
 
-const popupStyle = {
-  position: "fixed",
-  bottom: "20px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  backgroundColor: "#fff",
-  padding: "15px",
-  borderRadius: "8px",
-  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-  display: "flex",
-  gap: "10px",
-};
 
 export default App;
