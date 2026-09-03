@@ -1,0 +1,470 @@
+/* ==========================================
+   1. RESET & VARIÁVEIS DE TEMA
+
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Tema Escuro (Padrão) */
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --menu-bg: #1e1e1e;
+  --border-color: #333333;
+  --active-color: #3182CE;
+}
+
+[data-theme="light"] {
+  /* Tema Claro */
+  --bg-color: #f8f9fa;
+  --text-color: #1a1a1a;
+  --menu-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --active-color: #2C5282;
+}
+
+[data-theme="sepia"] {
+  /* Tema Sépia */
+  --bg-color: #f7f1e3;
+  --text-color: #433322;
+  --menu-bg: #efe3ce;
+  --border-color: #d1c2a5;
+  --active-color: #8f5829;
+}
+
+/* ==========================================
+   2. ESTRUTURA GLOBAL DO LEITOR
+   ========================================== */
+
+.reader-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ==========================================
+   3. ÁREA DE CONTEÚDO E TEXTO
+   ========================================== */
+.reader-content {
+  width: 100%;
+  max-width: 720px;
+  padding: 60px 20px 100px 20px;
+  line-height: 1.8;
+
+}
+
+.chapter-section-header {
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.reader-content h2 {
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 2rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.reader-content h3 {
+  color: var(--text-color);
+    font-weight: 400;
+    margin-top: 2rem;
+text-align: center;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+}
+
+.chapter-section-header h2,
+.chapter-section-header h3.chapter-section-label {
+  font-size: 1em;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.reader-content h4 {
+  text-align: center;
+  margin-top: 2.2em;
+  font-weight: 400;
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+
+.reader-content p {
+  text-align: var(--text-align, justify);
+  margin-bottom: .2em;
+  text-indent: 1.5em;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  text-justify: inter-word;
+  hyphenate-limit-chars: 6 3 3;
+}
+
+/* Seleciona o primeiro parágrafo que NÃO seja o rótulo da seção */
+.reader-content p:not(.chapter-section-label):first-of-type {
+  text-indent: 0;
+}
+
+.reader-content p:not(.chapter-section-label):first-of-type::first-line {
+  font-weight: 700;
+  /* Garante destaque mesmo se a fonte bold não carregar perfeitamente */
+  letter-spacing: 0.02em; 
+}
+
+/* ==========================================
+   3. rodapé
+   ========================================== */
+
+.reader-footer-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+  background-color: var(--bg-color, #121212);
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  z-index: 1000;
+}
+
+.reader-footer-actions .chapter-indicator {
+  font-size: 0.8rem;
+  color: var(--text-color, #e0e0e0);
+  opacity: 0.8;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
+}
+
+.reader-footer-actions .nav-btn {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--text-color, #1a1a1a);
+  border: 1px solid var(--border-color, currentColor);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.reader-footer-actions .nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+
+
+
+/* ==========================================
+   5. HEADER / MENU RETRÁTIL SUPERIOR
+   ========================================== */
+
+/* --- Container Principal do Header --- */
+.header-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-color, #121212);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2px;
+  animation: slideDownHeader 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDownHeader {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- Barra Superior (Título e Botões de Ação) --- */
+.header-main-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+.header-actions-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-btn {
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.header-btn:hover,
+.header-btn.active {
+  border-color: var(--active-color);
+  color: var(--active-color);
+}
+
+/* --- Painéis Expansíveis Gerais (Ajustes e Sumário) --- */
+.header-panel {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  overflow: hidden;
+  animation: expandPanel 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 100%;
+}
+
+@keyframes expandPanel {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: calc(90vh - 60px);;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+}
+
+/* --- Painel de Ajustes de Leitura --- */
+.settings-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.menu-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.menu-section label {
+  opacity: 0.8;
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.menu-section button {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all 0.4s ease;
+}
+
+.menu-section button:hover {
+  border-color: var(--active-color);
+}
+
+.menu-section button.active {
+  background-color: var(--active-color);
+  color: #ffffff;
+  border-color: var(--active-color);
+}
+
+.menu-section select {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+
+
+
+
+
+
+
+
+/* --- Painel do Sumário (TOC) --- */
+
+.toc-panel {
+  max-height: calc(90vh - 60px); /* Ocupa até 80% da altura da tela */
+  overflow-y: auto;
+}
+
+.toc-accordion {
+  width: 100%;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-bottom: solid 1px var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/* Submenu sem borda inferior dupla */
+.toc-list.submenu {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-left: 12px; /* Recuo dos capítulos da parte */
+}
+
+/* Base unificada para o título das seções e os botões dos capítulos */
+.toc-list button, 
+.toc-section-header,
+.toc-item-btn {
+  border: 0;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 8px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.toc-section-header {
+  margin-bottom: 2px;
+}
+
+/* Hover minimalista unificado */
+.toc-list button:hover, 
+.toc-section-header:hover,
+.toc-item-btn:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   GALERIA DE IMAGENS DE PÁGINA
+   ========================================== */
+.page-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 24px 0;
+  align-items: center;
+}
+
+.page-image-item {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 550px;
+  text-align: center;
+}
+
+.page-image {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.page-image-caption {
+  font-size: 0.85em;
+  opacity: 0.75;
+  margin-top: 8px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ==========================================
+   IMAGENS INTERCALADAS NO TEXTO (INLINE)
+   ========================================== */
+.inline-image-item {
+  margin: 32px auto;
+  padding: 0;
+  width: 100%;
+  max-width: 550px;
+  text-align: center;
+}
+
+/* BARRA DE PROGRESSO FLUTUANTE NO TOPO */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--active-color, #bb86fc);
+  z-index: 1200; 
+  transition: width 0.1s linear;
+}
